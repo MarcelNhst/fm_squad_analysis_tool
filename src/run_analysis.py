@@ -2,15 +2,21 @@ import pandas as pd
 import glob
 import os
 import uuid
+import logging
 from datetime import datetime
 pd.set_option('display.max_columns', None)
 
 path = 'H:/Python_Projects/fm_squad_analysis_tool/input'
 
+now = datetime.now()
+now_str = now.strftime("%Y%m%d%H%M%S")
+logging.basicConfig(filename='log/' + now_str +'.log', encoding='utf-8', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
+
 
 list_of_files = glob.glob(os.path.join(path, '*'))
 latest_file = max(list_of_files, key=os.path.getctime)
 print(latest_file)
+logging.info('Processing file ' + latest_file)
 
 # Read HTML file exported by FM - in this case an example of an output from the squad page
 # This reads as a list, not a dataframe
@@ -167,7 +173,7 @@ squad_rawdata.amrl= squad_rawdata.amrl.round(1)
 # builds squad dataframe using only columns that will be exported to HTML
 squad = squad_rawdata[['Inf','Name','Age','Club','Transfer Value','Salary','Nat','Position','Personality','Media Handling','Left Foot', 'Right Foot','Spd','Jum','Str','Work','Height','gkd','wcbs','cdd', 'wba', 'iwbs', 'dm','wa', 'iws','tfs', 'pa']]
 
-
+logging.info('Produced table with ' + str(squad.shape[0]) + ' entries and ' + str(squad.shape[1]) + ' columns')
 # taken from here: https://www.thepythoncode.com/article/convert-pandas-dataframe-to-html-table-python
 # creates a function to make a sortable html export
 
@@ -201,18 +207,15 @@ def generate_html(dataframe: pd.DataFrame):
     return html
 
 
-# generates random file name for write-out of html file
-#filename = "output/" + str(uuid.uuid4()) + ".html"
 
-now = datetime.now()
-now_str = now.strftime("%Y%m%d%H%M%S")
 
-# TODO: Fix input
-# I need to actually get the filename from the latest file variable. Probably with a str cut from the right.
+
 latest_file_split = latest_file.split("\\")
 
 filename = "output/" + now_str + '_' + latest_file_split[1]
 print(filename)
+logging.info('Writing result to ' + filename)
 
 html = generate_html(squad)
 open(filename, "w", encoding="utf-8").write(html)
+logging.info('Writing result completed successfully')
