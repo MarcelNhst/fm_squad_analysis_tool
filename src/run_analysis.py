@@ -53,6 +53,56 @@ squad_rawdata['gk_secondary'] = (
 squad_rawdata['gk'] = ( ((squad_rawdata['gk_essential']) + (squad_rawdata['gk_core']) + (squad_rawdata['gk_secondary'])) / 37 )
 squad_rawdata.gk= squad_rawdata.gk.round(1)
 
+# calculates fb score
+squad_rawdata['fb_essential'] = ( 
+    squad_rawdata['Wor'] +
+    squad_rawdata['Acc'] + 
+    squad_rawdata['Pac'] + 
+    squad_rawdata['Sta'])
+squad_rawdata['fb_core'] = ( 
+    squad_rawdata['Cro'] + 
+    squad_rawdata['Dri'] + 
+    squad_rawdata['Mar'] + 
+    squad_rawdata['OtB'] + 
+    squad_rawdata['Tck'] + 
+    squad_rawdata['Tea'])
+squad_rawdata['fb_secondary'] = ( 
+    squad_rawdata['Agi'] + 
+    squad_rawdata['Ant'] + 
+    squad_rawdata['Cnt'] + 
+    squad_rawdata['Dec'] + 
+    squad_rawdata['Fir'] + 
+    squad_rawdata['Pas'] + 
+    squad_rawdata['Pos'] + 
+    squad_rawdata['Tec'])
+squad_rawdata['fb'] =( ( ( squad_rawdata['fb_essential'] * 5) + ( squad_rawdata['fb_core'] * 3) + (squad_rawdata['fb_secondary'] * 1)) / 46 )
+squad_rawdata.fb= squad_rawdata.fb.round(1)
+
+# calculates segundo volante on attack score
+squad_rawdata['vol'] = ((
+    ( squad_rawdata['Wor'] * 5) + 
+    ( squad_rawdata['Pac'] * 5) + 
+    ( squad_rawdata['Sta'] * 3) + 
+    ( squad_rawdata['Pas'] * 3) + 
+    ( squad_rawdata['Tck'] * 2) + 
+    ( squad_rawdata['Ant'] * 2) + 
+    ( squad_rawdata['Cnt'] * 2) + 
+    ( squad_rawdata['Pos'] * 2) + 
+    ( squad_rawdata['Tea'] * 2) + 
+    ( squad_rawdata['Fir'] * 1) +
+    ( squad_rawdata['Mar'] * 1) +
+    ( squad_rawdata['Agg'] * 1) +
+    ( squad_rawdata['Cmp'] * 1) +
+    ( squad_rawdata['Dec'] * 1) +
+    ( squad_rawdata['Str'] * 1) ) / 32)
+squad_rawdata.vol= squad_rawdata.vol.round(1)
+
+# calculates striker score
+squad_rawdata['str_core'] = ( squad_rawdata['Cmp'] + squad_rawdata['Fin'] + squad_rawdata['OtB'] + squad_rawdata['Pac']) / 4
+squad_rawdata['str_secondary'] = ( squad_rawdata['Acc'] + squad_rawdata['Agi'] + squad_rawdata['Ant']+ squad_rawdata['Bal']+ squad_rawdata['Dec']+ squad_rawdata['Dri']+ squad_rawdata['Fir']+ squad_rawdata['Pas']+ squad_rawdata['Sta']+ squad_rawdata['Tec']+ squad_rawdata['Wor']) / 11
+squad_rawdata['str'] =( ( squad_rawdata['str_core'] * 0.5) + (squad_rawdata['str_secondary'] * 0.5))
+squad_rawdata.str= squad_rawdata.str.round(1)
+
 # calculates Goalkeeper_Defend score
 squad_rawdata['gkd_key'] = ( squad_rawdata['Agi'] + squad_rawdata['Ref'] )
 squad_rawdata['gkd_green'] = ( squad_rawdata['Aer'] + squad_rawdata['Cmd'] + squad_rawdata['Han'] + squad_rawdata['Kic'] + squad_rawdata['Cnt'] + squad_rawdata['Pos'] )
@@ -171,7 +221,7 @@ squad_rawdata['amrl'] = ((
 squad_rawdata.amrl= squad_rawdata.amrl.round(1)
 
 # builds squad dataframe using only columns that will be exported to HTML
-squad = squad_rawdata[['Inf','Name','Age','Club','Transfer Value','Salary','Nat','Position','Personality','Media Handling','Left Foot', 'Right Foot','Spd','Jum','Str','Work','Height','gkd','wcbs','cdd', 'wba', 'iwbs', 'dm','wa', 'iws','tfs', 'pa']]
+squad = squad_rawdata[['Inf','Name','Age','Club','Transfer Value','Salary','Nat','Position','Personality','Media Handling','Left Foot', 'Right Foot','Spd','Jum','Str','Work','Height','gk','cb','fb', 'dm','vol', 'str']]
 
 logging.info('Produced table with ' + str(squad.shape[0]) + ' entries and ' + str(squad.shape[1]) + ' columns')
 # taken from here: https://www.thepythoncode.com/article/convert-pandas-dataframe-to-html-table-python
