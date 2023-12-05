@@ -2,6 +2,8 @@
 def calculate_kpi_score(df, essential, core, secondary):
     score = 0
     div = len(essential) * 5 + len(core) * 3 + len(secondary)
+    if div == 0:
+        raise Exception("Number of fields for KPI calculation cannot be zero")
     
     for i in essential:
         score = score + (df[i] * 5)
@@ -19,6 +21,8 @@ def calculate_kpi_score(df, essential, core, secondary):
 def calculate_custom_kpi_score(df, essential, core, secondary, tertiary):
     score = 0
     div = len(essential) * 5 + len(core) * 3 + len(secondary) * 2 + len(tertiary)
+    if div == 0:
+        raise Exception("Number of fields for KPI calculation cannot be zero")
     
     for i in essential:
         score = score + (df[i] * 5)

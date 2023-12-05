@@ -46,7 +46,6 @@ squad_rawdata['af'] = calculate_kpi_score(squad_rawdata, ['Acc', 'Pac', 'Fin'], 
 squad_rawdata['bpd'] = calculate_kpi_score(squad_rawdata, ['Acc', 'Pac', 'Jum', 'Cmp'], ['Hea', 'Mar', 'Pas', 'Tck', 'Pos', 'Str'], ['Fir', 'Tec', 'Agg', 'Ant', 'Bra', 'Cnt', 'Dec', 'Vis'])
 
 
-
 # builds squad dataframe using only columns that will be exported to HTML
 squad = squad_rawdata[['Inf','Name','Age','Club','Transfer Value','Salary','Nat','Position','Personality','Media Handling','Left Foot', 'Right Foot','Spd','Jum','Str','Work','Height','gk', 'bpd', 'fb','vol', 'af']]
 
