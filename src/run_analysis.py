@@ -31,20 +31,24 @@ squad_rawdata['Work'] = ( squad_rawdata['Wor'] + squad_rawdata['Sta'] ) / 2
 squad_rawdata['SetP'] = ( squad_rawdata['Jum'] + squad_rawdata['Bra'] ) / 2
 
 # calculates gk score
+logging.info('Calculating GK KPI')
 squad_rawdata['gk'] = calculate_kpi_score(squad_rawdata, ['Agi', 'Ref'], ['1v1', 'Ant', 'Cmd', 'Cnt', 'Kic', 'Pos'], ['Acc', 'Aer', 'Cmp', 'Dec', 'Fir', 'Han', 'Pas', 'Thr', 'Vis'])
 
 # calculates fb score
+logging.info('Calculating FB KPI')
 squad_rawdata['fb'] = calculate_kpi_score(squad_rawdata, ['Wor', 'Acc', 'Pac', 'Sta'], ['Cro', 'Dri', 'Mar', 'OtB', 'Tck', 'Tea'], ['Agi', 'Ant', 'Cnt', 'Dec', 'Fir', 'Pas', 'Pos', 'Tec'])
 
 # calculates segundo volante on attack score
+logging.info('Calculating VOL KPI')
 squad_rawdata['vol'] = calculate_custom_kpi_score(squad_rawdata, ['Wor', 'Pac'], ['Sta', 'Pas'], ['Tck', 'Ant', 'Cnt', 'Pos', 'Tea'], ['Fir', 'Mar', 'Agg', 'Cmp', 'Dec', 'Str'])
 
 # calculates Advanced_forward_Attack score
+logging.info('Calculating AF KPI')
 squad_rawdata['af'] = calculate_kpi_score(squad_rawdata, ['Acc', 'Pac', 'Fin'], ['Dri', 'Fir', 'Tec', 'Cmp', 'OtB'], ['Pas', 'Ant', 'Dec', 'Wor', 'Agi', 'Bal', 'Sta'])
 
 # calculates Ball_playing_defender_Defend score
+logging.info('Calculating BPD KPI')
 squad_rawdata['bpd'] = calculate_kpi_score(squad_rawdata, ['Acc', 'Pac', 'Jum', 'Cmp'], ['Hea', 'Mar', 'Pas', 'Tck', 'Pos', 'Str'], ['Fir', 'Tec', 'Agg', 'Ant', 'Bra', 'Cnt', 'Dec', 'Vis'])
-
 
 
 # builds squad dataframe using only columns that will be exported to HTML
