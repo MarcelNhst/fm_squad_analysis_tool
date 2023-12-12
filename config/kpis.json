@@ -1,0 +1,46 @@
+{
+    "bpd":
+    {
+        "active": 1,
+        "core_attributes": ["Acc", "Pac", "Jum", "Cmp"],
+        "essential_attributes": ["Hea", "Mar", "Pas", "Tck", "Pos", "Str"],
+        "secondary_attributes": ["Fir", "Tec", "Agg", "Ant", "Bra", "Cnt", "Dec", "Vis"]
+    },
+    "af":
+    {
+        "active": 1,
+        "core_attributes": ["Acc", "Pac", "Fin"],
+        "essential_attributes": ["Dri", "Fir", "Tec", "Cmp", "OtB"],
+        "secondary_attributes": ["Pas", "Ant", "Dec", "Wor", "Agi", "Bal", "Sta"]
+    },
+    "gk":
+    {
+        "active": 1,
+        "core_attributes": ["Agi", "Ref"],
+        "essential_attributes": ["1v1", "Ant", "Cmd", "Cnt", "Kic", "Pos"],
+        "secondary_attributes": ["Acc", "Aer", "Cmp", "Dec", "Fir", "Han", "Pas", "Thr", "Vis"]
+    },
+    "fb":
+    {
+        "active": 1,
+        "core_attributes": ["Wor", "Acc", "Pac", "Sta"],
+        "essential_attributes": ["Cro", "Dri", "Mar", "OtB", "Tck", "Tea"],
+        "secondary_attributes": ["Agi", "Ant", "Cnt", "Dec", "Fir", "Pas", "Pos", "Tec"]
+    },
+    "vol":
+    {
+        "active": 2,
+        "core_attributes": ["Wor", "Pac"],
+        "essential_attributes": ["Sta", "Pas"],
+        "secondary_attributes": ["Tck", "Ant", "Cnt", "Pos", "Tea"],
+        "tertiary_attributes": ["Fir", "Mar", "Agg", "Cmp", "Dec", "Str"]
+    },
+    "wi":
+    {
+        "active": 0,
+        "core_attributes": ["Acc", "Pac", "Sta", "Wor"],
+        "essential_attributes": ["Cro", "Dri", "Tec", "Agi"],
+        "secondary_attributes": ["Fir", "Pas", "OtB", "Bal"]
+    }
+
+}

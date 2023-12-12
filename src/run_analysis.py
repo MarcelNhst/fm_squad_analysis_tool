@@ -3,6 +3,7 @@ import glob
 import os
 import uuid
 import logging
+import json
 from datetime import datetime
 from kpi_calculations import calculate_kpi_score, calculate_custom_kpi_score
 pd.set_option('display.max_columns', None)
@@ -30,29 +31,24 @@ squad_rawdata['Spd'] = ( squad_rawdata['Pac'] + squad_rawdata['Acc'] ) / 2
 squad_rawdata['Work'] = ( squad_rawdata['Wor'] + squad_rawdata['Sta'] ) / 2
 squad_rawdata['SetP'] = ( squad_rawdata['Jum'] + squad_rawdata['Bra'] ) / 2
 
-# calculates gk score
-logging.info('Calculating GK KPI')
-squad_rawdata['gk'] = calculate_kpi_score(squad_rawdata, ['Agi', 'Ref'], ['1v1', 'Ant', 'Cmd', 'Cnt', 'Kic', 'Pos'], ['Acc', 'Aer', 'Cmp', 'Dec', 'Fir', 'Han', 'Pas', 'Thr', 'Vis'])
 
-# calculates fb score
-logging.info('Calculating FB KPI')
-squad_rawdata['fb'] = calculate_kpi_score(squad_rawdata, ['Wor', 'Acc', 'Pac', 'Sta'], ['Cro', 'Dri', 'Mar', 'OtB', 'Tck', 'Tea'], ['Agi', 'Ant', 'Cnt', 'Dec', 'Fir', 'Pas', 'Pos', 'Tec'])
+f = open('config/kpis.json')
 
-# calculates segundo volante on attack score
-logging.info('Calculating VOL KPI')
-squad_rawdata['vol'] = calculate_custom_kpi_score(squad_rawdata, ['Wor', 'Pac'], ['Sta', 'Pas'], ['Tck', 'Ant', 'Cnt', 'Pos', 'Tea'], ['Fir', 'Mar', 'Agg', 'Cmp', 'Dec', 'Str'])
+data = json.load(f)
 
-# calculates Advanced_forward_Attack score
-logging.info('Calculating AF KPI')
-squad_rawdata['af'] = calculate_kpi_score(squad_rawdata, ['Acc', 'Pac', 'Fin'], ['Dri', 'Fir', 'Tec', 'Cmp', 'OtB'], ['Pas', 'Ant', 'Dec', 'Wor', 'Agi', 'Bal', 'Sta'])
-
-# calculates Ball_playing_defender_Defend score
-logging.info('Calculating BPD KPI')
-squad_rawdata['bpd'] = calculate_kpi_score(squad_rawdata, ['Acc', 'Pac', 'Jum', 'Cmp'], ['Hea', 'Mar', 'Pas', 'Tck', 'Pos', 'Str'], ['Fir', 'Tec', 'Agg', 'Ant', 'Bra', 'Cnt', 'Dec', 'Vis'])
+for i in data:
+    if data[i]['active'] == 1:
+        logging.info('Calculating ' + i + ' score')
+        squad_rawdata[i] = calculate_kpi_score(squad_rawdata, data[i]['core_attributes'], data[i]['essential_attributes'], data[i]['secondary_attributes'])
+    elif data[i]['active'] == 2:
+        logging.info('Calculating ' + i + ' score')
+        squad_rawdata[i] = calculate_custom_kpi_score(squad_rawdata, data[i]['core_attributes'], data[i]['essential_attributes'], data[i]['secondary_attributes'], data[i]['tertiary_attributes'])
+    else:
+        logging.info('KPI ' + i + ' is set to inactive')
 
 
 # builds squad dataframe using only columns that will be exported to HTML
-squad = squad_rawdata[['Inf','Name','Age','Club','Transfer Value','Salary','Nat','Position','Personality','Media Handling','Left Foot', 'Right Foot','Spd','Jum','Str','Work','Height','gk', 'bpd', 'fb','vol', 'af']]
+squad = squad_rawdata[['Inf','Name','Age','Club','Transfer Value','Salary','Nat','Position','Personality','Media Handling','Left Foot', 'Right Foot','Spd','Jum','Str','Work','Height','gk', 'bpd', 'fb', 'vol', 'af']]
 
 logging.info('Produced table with ' + str(squad.shape[0]) + ' entries and ' + str(squad.shape[1]) + ' columns')
 # taken from here: https://www.thepythoncode.com/article/convert-pandas-dataframe-to-html-table-python
